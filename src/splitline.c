@@ -1,6 +1,8 @@
 #include "splitline.h"
 #include "err_msg.h"
 
+static int space_only(const char *s);
+
 int splitline(char *line, char **left, char **right)
 {
     char *p;
@@ -29,22 +31,32 @@ int splitline(char *line, char **left, char **right)
         return 0;
     }
 
-    *right = p;
     *left = line;
+    *right = p;
 
-    /* Test whether left consists only of spaces. */
-    p = *left;
+    if (space_only(*left)) {
+        set_err_msg("left column consists only of spaces: |%s%c%s|",
+            *left, '\t', *right);
+        return 0;
+    }
+    if (space_only(*right)) {
+        set_err_msg("right column consists only of spaces: |%s%c%s|",
+            *left, '\t', *right);
+        return 0;
+    }
+
+    return 1;
+}
+
+static int space_only(const char *s)
+{
+    char *p = s;
+
     while (*p != '\0')
         if (*p != ' ')          /* found a non-space */
             break;
         else
             ++p;
 
-    if (*p == '\0') {           /* no non-space found */
-        set_err_msg("left column consists only of spaces: |%s%c%s|",
-            *left, '\t', *right);
-        return 0;
-    }
-
-    return 1;
+    return *p == '\0';
 }
