@@ -20,8 +20,13 @@ int splitline(char *line, char **left, char **right)
         return 0;
     }
 
+    if (*++p == '\0') {
+        set_err_msg("missing right column: |%s%c|", line, '\t');
+        return 0;
+    }
+
     *left = line;
-    *right = ++p;
+    *right = p;
 
     return 1;
 }

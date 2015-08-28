@@ -91,5 +91,30 @@ TEST(splitline, line_without_tab)
     free(line);
 }
 
+TEST(splitline, missing_right)
+{
+    char the_line[] = "left\t";
+    char *line;
+    char *left = NULL;
+    char *right = NULL;
+    int i = -1;
+    size_t n;
+
+    n = (strlen(the_line) + 1) * sizeof(char);
+    if ((line = malloc(n)) == NULL) {
+        set_err_msg("failed to malloc %lu bytes",
+            (unsigned long) n);
+        pr_err_msg();
+        TEST_FAIL();
+    }
+    strcpy(line, the_line);
+
+    i = splitline(line, &left, &right);
+    TEST_ASSERT_EQUAL_INT(0, i);
+    TEST_ASSERT_EQUAL_STRING("missing right column: |left\t|", err_msg);
+
+    free(line);
+}
+
     free(line);
 }
