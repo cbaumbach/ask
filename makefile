@@ -49,7 +49,7 @@ test/test_getline.o: test/test_getline.c src/getline.h src/err_msg.h
 
 # ==== getline =======================================================
 
-src/getline.o: src/getline.c src/getline.h
+src/getline.o: src/getline.c src/getline.h src/err_msg.h
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 # ==== error handling ================================================
