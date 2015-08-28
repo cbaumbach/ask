@@ -11,6 +11,10 @@ int splitline(char *line, char **left, char **right)
         set_err_msg("line was empty");
         return 0;
     }
+    else if (*p == '\t') {
+        set_err_msg("missing left column: |%s|", line);
+        return 0;
+    }
     while (*p != '\t'  &&  *p != '\0')
         ++p;
     if (*p == '\t')
