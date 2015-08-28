@@ -29,8 +29,22 @@ int splitline(char *line, char **left, char **right)
         return 0;
     }
 
-    *left = line;
     *right = p;
+    *left = line;
+
+    /* Test whether left consists only of spaces. */
+    p = *left;
+    while (*p != '\0')
+        if (*p != ' ')          /* found a non-space */
+            break;
+        else
+            ++p;
+
+    if (*p == '\0') {           /* no non-space found */
+        set_err_msg("left column consists only of spaces: |%s%c%s|",
+            *left, '\t', *right);
+        return 0;
+    }
 
     return 1;
 }
