@@ -1,0 +1,4 @@
+*.o
+/path_to_unity
+/test/test_runners/all_tests
+/test/test_runners/all_tests.out
