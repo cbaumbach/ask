@@ -13,10 +13,11 @@ int main(int argc, char **argv)
 {
     char *filename;
     int nline;                  /* number of lines read */
+    int npassed;          /* number of correctly answered questions */
     int i;
     FILE *fp;
     char *line, *left, *right, *answer;
-    Entry e;
+    Entry e, *ep;
     Tab tab;
 
     if (argc != 2) {
@@ -53,17 +54,26 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    for (i = 0; i < tab.n; i++) {
-        e = tab.e[i];
-        printf("> %s\n", prompt(e, LEFT));
+    npassed = 0;
+    i = 0;
+    while (npassed < tab.n) {
+        ep = &tab.e[i++];
+        if (ep->passed)
+            continue;
+        printf("> %s\n", prompt(*ep, LEFT));
         printf("? ");
         fflush(stdout);
         if (!getline(&answer, stdin)) {
             pr_err_msg();
             continue;
         }
-        if (!correct(answer, e, RIGHT))
-            printf("! %s\n", e.right);
+        if (correct(answer, *ep, RIGHT)) {
+            ep->passed = 1;
+            ++npassed;
+        }
+        else
+            printf("! %s\n", ep->right);
+        i %= tab.n;
     }
 
     exit(EXIT_SUCCESS);
