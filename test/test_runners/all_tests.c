@@ -6,6 +6,7 @@ static void RunAllTests(void)
     RUN_TEST_GROUP(splitline);
     RUN_TEST_GROUP(makeentry);
     RUN_TEST_GROUP(insert);
+    RUN_TEST_GROUP(prompt);
 }
 
 int main(int argc, const char *argv[])

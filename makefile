@@ -16,12 +16,15 @@ TEST_SOURCES = test/test_runners/all_tests.c \
                test/test_runners/test_makeentry_runner.c \
                test/test_makeentry.c \
                test/test_runners/test_insert_runner.c \
-               test/test_insert.c
+               test/test_insert.c \
+               test/test_runners/test_prompt_runner.c \
+               test/test_prompt.c
 
 SOURCES = src/getline.c \
           src/splitline.c \
           src/makeentry.c \
           src/insert.c \
+          src/prompt.c \
 		  src/err_msg.c
 
 TEST_OBJECTS = $(subst .c,.o,$(TEST_SOURCES))
@@ -86,6 +89,16 @@ test/test_runners/test_makeentry_runner.o: \
 test/test_makeentry.o: test/test_makeentry.c src/makeentry.h src/err_msg.h
 	$(CC) $(CFLAGS) $(UNITY_INCLUDES) $(INCLUDES) -c -o $@ $<
 
+# ==== test prompt function =======================================
+
+# test runner
+test/test_runners/test_prompt_runner.o: \
+		test/test_runners/test_prompt_runner.c
+	$(CC) $(CFLAGS) $(UNITY_INCLUDES) $(INCLUDES) -c -o $@ $<
+
+test/test_prompt.o: test/test_prompt.c src/prompt.h src/err_msg.h
+	$(CC) $(CFLAGS) $(UNITY_INCLUDES) $(INCLUDES) -c -o $@ $<
+
 # ==== test insert function ==========================================
 
 # test runner
@@ -114,6 +127,11 @@ src/makeentry.o: src/makeentry.c src/makeentry.h src/err_msg.h
 # ==== insert =====================================================
 
 src/insert.o: src/insert.c src/insert.h src/err_msg.h
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
+
+# ==== prompt =====================================================
+
+src/prompt.o: src/prompt.c src/prompt.h src/err_msg.h
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 # ==== error handling ================================================
