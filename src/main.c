@@ -114,9 +114,11 @@ int main(int argc, char **argv)
             ep->passed = 1;
             ++npassed;
         }
-        else
+        else if (++ep->ntry >= params.maxtry) {
+            ep->ntry = 0;       /* reset */
             printf("! %s\n",
                 (params.from == LEFT) ? ep->right : ep->left);
+        }
         i %= tab.n;
     }
 
@@ -128,11 +130,14 @@ void usage(const char *progname)
     fprintf(stderr,
         "Usage: %s [OPTIONS] file\n"
         "\n"
-        "OPTIONS\n"
+        "OPTIONS:\n"
         "\n"
         "  --help          display this help message\n"
         "  --left2right    ask from left to right column\n"
         "  --right2left    ask from right to left column\n"
+        "  --try=K         if user fails to give the correct\n"
+        "                  answer to a question K times in a\n"
+        "                  row, display the correct answer\n"
         "  --as-is         use order in input file\n"
         "  --random        use random order\n"
         "  --lsort         sort by left column\n"

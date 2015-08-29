@@ -4,6 +4,7 @@
 struct entry {
     const char *left;
     const char *right;
+    int ntry;
     int passed;
 };
 
