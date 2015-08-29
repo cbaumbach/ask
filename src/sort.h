@@ -3,8 +3,8 @@
 
 #include "makeentry.h"
 
-int by_left(Entry *s, Entry *t);
-int by_right(Entry *s, Entry *t);
-int by_chance(Entry *s, Entry *t);
+int by_left(const void *s, const void *t);
+int by_right(const void *s, const void *t);
+int by_chance(const void *s, const void *t);
 
 #endif

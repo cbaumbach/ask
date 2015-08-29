@@ -2,20 +2,28 @@
 #include <string.h>
 #include <stdlib.h>
 
-int by_left(Entry *s, Entry *t)
+int by_left(const void *s, const void *t)
 {
-    return strcmp(s->left, t->left);
+    Entry *e1 = (Entry *) s;
+    Entry *e2 = (Entry *) t;
+
+    return strcmp(e1->left, e2->left);
 }
 
-int by_right(Entry *s, Entry *t)
+int by_right(const void *s, const void *t)
 {
-    return strcmp(s->right, t->right);
+    Entry *e1 = (Entry *) s;
+    Entry *e2 = (Entry *) t;
+
+    return strcmp(e1->right, e2->right);
 }
 
-int by_chance(Entry *s, Entry *t)
+int by_chance(const void *s, const void *t)
 {
+    Entry *e1 = (Entry *) s;
+    Entry *e2 = (Entry *) t;
     int r = rand();
-    int i = strcmp(s->right, t->right);
+    int i = strcmp(e1->right, e2->right);
 
     if (i == 0)
         return 0;

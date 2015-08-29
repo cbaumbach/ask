@@ -11,8 +11,6 @@
 #include "sort.h"
 #include <time.h>
 
-typedef int (*cmpfn)(const void *, const void *);
-
 void usage(const char *progname);
 
 int main(int argc, char **argv)
@@ -81,15 +79,15 @@ int main(int argc, char **argv)
     case RANDOM:
         /* randomize order of entries */
         srand((unsigned) time(NULL));
-        qsort(tab.e, tab.n, sizeof(Entry), (cmpfn) by_chance);
+        qsort(tab.e, tab.n, sizeof(Entry), by_chance);
         break;
     case LSORT:
         /* sort entries by left column */
-        qsort(tab.e, tab.n, sizeof(Entry), (cmpfn) by_left);
+        qsort(tab.e, tab.n, sizeof(Entry), by_left);
         break;
     case RSORT:
         /* sort entries by right column */
-        qsort(tab.e, tab.n, sizeof(Entry), (cmpfn) by_right);
+        qsort(tab.e, tab.n, sizeof(Entry), by_right);
         break;
     default:
         set_err_msg("can't happen");
