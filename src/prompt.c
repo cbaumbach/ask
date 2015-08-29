@@ -1,5 +1,6 @@
 #include "prompt.h"
 #include <stdlib.h>
+#include <string.h>
 
 const char *prompt(Entry e, int dir)
 {
