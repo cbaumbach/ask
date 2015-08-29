@@ -5,6 +5,7 @@
 #include "makeentry.h"
 #include "insert.h"
 #include "splitline.h"
+#include "prompt.h"
 
 void usage(const char *progname);
 
@@ -14,7 +15,7 @@ int main(int argc, char **argv)
     int nline;                  /* number of lines read */
     int i;
     FILE *fp;
-    char *line, *left, *right;
+    char *line, *left, *right, *answer;
     Entry e;
     Tab tab;
 
@@ -54,8 +55,15 @@ int main(int argc, char **argv)
 
     for (i = 0; i < tab.n; i++) {
         e = tab.e[i];
-        printf("entry %d: %10s %10s %10d\n", i, e.left, e.right,
-            e.passed);
+        printf("> %s\n", prompt(e, LEFT));
+        printf("? ");
+        fflush(stdout);
+        if (!getline(&answer, stdin)) {
+            pr_err_msg();
+            continue;
+        }
+        if (!correct(answer, e, RIGHT))
+            printf("! %s\n", e.right);
     }
 
     exit(EXIT_SUCCESS);
