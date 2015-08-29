@@ -7,6 +7,7 @@ Params initparams(void)
 {
     Params p;
 
+    p.help = 0;
     p.from = LEFT;
     p.order = ASIS;
     p.filename = NULL;
@@ -23,7 +24,9 @@ int getparams(int argc, char **argv, Params *p)
     i = 1;                      /* skip program name */
     while (i < argc - 1) {      /* stop when filename is reached */
 #define IS(opt) strcmp(opt, argv[i]) == 0
-        if (IS("--left2right"))
+        if (IS("--help"))
+            p->help = 1;
+        else if (IS("--left2right"))
             p->from = LEFT;
         else if (IS("--right2left"))
             p->from = RIGHT;

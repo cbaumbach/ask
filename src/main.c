@@ -33,6 +33,11 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
+    if (params.help) {
+        usage(argv[0]);
+        exit(EXIT_SUCCESS);
+    }
+
     /* ============================================================
        Read entries from input file.
        ============================================================ */
@@ -125,6 +130,7 @@ void usage(const char *progname)
         "\n"
         "OPTIONS\n"
         "\n"
+        "  --help          display this help message\n"
         "  --left2right    ask from left to right column\n"
         "  --right2left    ask from right to left column\n"
         "  --as-is         use order in input file\n"

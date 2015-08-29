@@ -9,6 +9,7 @@ enum {
 };
 
 struct params {
+    int help;                   /* display help message */
     int from;                   /* LEFT RIGTH */
     int order;                  /* ASIS RANDOM LSORT RSORT */
     const char *filename;       /* name of input file */
