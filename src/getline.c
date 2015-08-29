@@ -15,7 +15,7 @@ int getline(char **line, FILE *fp)
     if ((buf = malloc(n * sizeof(char))) == NULL) {
         set_err_msg("failed to malloc %lu bytes",
             (unsigned long) n * sizeof(char));
-        return(0);
+        return 0;
     }
 
     nc = 0;
@@ -25,7 +25,7 @@ int getline(char **line, FILE *fp)
             if ((p = realloc(buf, n * sizeof(char))) == NULL) {
                 set_err_msg("failed to realloc %lu bytes",
                     (unsigned long) n * sizeof(char));
-                return(0);
+                return 0;
             }
             buf = p;
         }
