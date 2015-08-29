@@ -12,10 +12,13 @@ TEST_SOURCES = test/test_runners/all_tests.c \
                test/test_runners/test_getline_runner.c \
                test/test_getline.c \
                test/test_runners/test_splitline_runner.c \
-               test/test_splitline.c
+               test/test_splitline.c \
+               test/test_runners/test_makeentry_runner.c \
+               test/test_makeentry.c
 
 SOURCES = src/getline.c \
           src/splitline.c \
+          src/makeentry.c \
 		  src/err_msg.c
 
 TEST_OBJECTS = $(subst .c,.o,$(TEST_SOURCES))
@@ -70,6 +73,16 @@ test/test_runners/test_splitline_runner.o: \
 test/test_splitline.o: test/test_splitline.c src/splitline.h src/err_msg.h
 	$(CC) $(CFLAGS) $(UNITY_INCLUDES) $(INCLUDES) -c -o $@ $<
 
+# ==== test makeentry function =======================================
+
+# test runner
+test/test_runners/test_makeentry_runner.o: \
+		test/test_runners/test_makeentry_runner.c
+	$(CC) $(CFLAGS) $(UNITY_INCLUDES) $(INCLUDES) -c -o $@ $<
+
+test/test_makeentry.o: test/test_makeentry.c src/makeentry.h src/err_msg.h
+	$(CC) $(CFLAGS) $(UNITY_INCLUDES) $(INCLUDES) -c -o $@ $<
+
 # ==== splitline =====================================================
 
 src/splitline.o: src/splitline.c src/splitline.h src/err_msg.h
@@ -78,6 +91,11 @@ src/splitline.o: src/splitline.c src/splitline.h src/err_msg.h
 # ==== getline =======================================================
 
 src/getline.o: src/getline.c src/getline.h src/err_msg.h
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
+
+# ==== makeentry =====================================================
+
+src/makeentry.o: src/makeentry.c src/makeentry.h src/err_msg.h
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 # ==== error handling ================================================
