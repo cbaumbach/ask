@@ -8,6 +8,7 @@ static void RunAllTests(void)
     RUN_TEST_GROUP(insert);
     RUN_TEST_GROUP(prompt);
     RUN_TEST_GROUP(sort);
+    RUN_TEST_GROUP(getparams);
 }
 
 int main(int argc, const char *argv[])

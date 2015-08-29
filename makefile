@@ -20,7 +20,9 @@ TEST_SOURCES = test/test_runners/all_tests.c \
                test/test_runners/test_prompt_runner.c \
                test/test_prompt.c \
                test/test_runners/test_sort_runner.c \
-               test/test_sort.c
+               test/test_sort.c \
+               test/test_runners/test_getparams_runner.c \
+               test/test_getparams.c
 
 SOURCES = src/getline.c \
           src/splitline.c \
@@ -28,6 +30,7 @@ SOURCES = src/getline.c \
           src/insert.c \
           src/prompt.c \
           src/sort.c \
+          src/getparams.c \
 		  src/err_msg.c
 
 TEST_OBJECTS = $(subst .c,.o,$(TEST_SOURCES))
@@ -122,6 +125,16 @@ test/test_runners/test_sort_runner.o: \
 test/test_sort.o: test/test_sort.c src/sort.h src/err_msg.h
 	$(CC) $(CFLAGS) $(UNITY_INCLUDES) $(INCLUDES) -c -o $@ $<
 
+# ==== test getparams ================================================
+
+# test runner
+test/test_runners/test_getparams_runner.o: \
+		test/test_runners/test_getparams_runner.c
+	$(CC) $(CFLAGS) $(UNITY_INCLUDES) $(INCLUDES) -c -o $@ $<
+
+test/test_getparams.o: test/test_getparams.c src/getparams.h src/err_msg.h
+	$(CC) $(CFLAGS) $(UNITY_INCLUDES) $(INCLUDES) -c -o $@ $<
+
 # ==== splitline =====================================================
 
 src/splitline.o: src/splitline.c src/splitline.h src/err_msg.h
@@ -150,6 +163,11 @@ src/prompt.o: src/prompt.c src/prompt.h src/err_msg.h
 # ==== sort functions ================================================
 
 src/sort.o: src/sort.c src/sort.h src/err_msg.h
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
+
+# ==== getparams functions ===========================================
+
+src/getparams.o: src/getparams.c src/getparams.h src/err_msg.h
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 # ==== error handling ================================================
