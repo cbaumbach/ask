@@ -6,6 +6,7 @@
 #include "insert.h"
 #include "splitline.h"
 #include "prompt.h"
+#include "getparams.h"
 
 void usage(const char *progname);
 
@@ -19,15 +20,20 @@ int main(int argc, char **argv)
     char *line, *left, *right, *answer;
     Entry e, *ep;
     Tab tab;
+    Params params;
 
-    if (argc != 2) {
+    if (!getparams(argc, argv, &params)) {
+        pr_err_msg();
         usage(argv[0]);
         exit(EXIT_FAILURE);
     }
 
-    filename = argv[1];
-    if ((fp = fopen(filename, "rb")) == NULL) {
-        set_err_msg("failed to open file: %s", filename);
+    /* ============================================================
+       Read entries from input file.
+       ============================================================ */
+
+    if ((fp = fopen(params.filename, "rb")) == NULL) {
+        set_err_msg("failed to open file: %s", params.filename);
         pr_err_msg();
         exit(EXIT_FAILURE);
     }
