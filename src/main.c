@@ -7,6 +7,11 @@
 #include "splitline.h"
 #include "prompt.h"
 #include "getparams.h"
+#include "from.h"
+#include "sort.h"
+#include <time.h>
+
+typedef int (*cmpfn)(const void *, const void *);
 
 void usage(const char *progname);
 
@@ -60,25 +65,53 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
+    /* ============================================================
+       Ask user for translations.
+       ============================================================ */
+
+    switch(params.order) {
+    case ASIS:
+        /* nothing to do */
+        break;
+    case RANDOM:
+        /* randomize order of entries */
+        srand((unsigned) time(NULL));
+        qsort(tab.e, tab.n, sizeof(Entry), (cmpfn) by_chance);
+        break;
+    case LSORT:
+        /* sort entries by left column */
+        qsort(tab.e, tab.n, sizeof(Entry), (cmpfn) by_left);
+        break;
+    case RSORT:
+        /* sort entries by right column */
+        qsort(tab.e, tab.n, sizeof(Entry), (cmpfn) by_right);
+        break;
+    default:
+        set_err_msg("can't happen");
+        pr_err_msg();
+        exit(EXIT_FAILURE);
+    }
+
     npassed = 0;
     i = 0;
     while (npassed < tab.n) {
         ep = &tab.e[i++];
         if (ep->passed)
             continue;
-        printf("> %s\n", prompt(*ep, LEFT));
+        printf("> %s\n", prompt(*ep, params.from));
         printf("? ");
         fflush(stdout);
         if (!getline(&answer, stdin)) {
             pr_err_msg();
             continue;
         }
-        if (correct(answer, *ep, RIGHT)) {
+        if (correct(answer, *ep, params.from)) {
             ep->passed = 1;
             ++npassed;
         }
         else
-            printf("! %s\n", ep->right);
+            printf("! %s\n",
+                (params.from == LEFT) ? ep->right : ep->left);
         i %= tab.n;
     }
 
@@ -87,5 +120,16 @@ int main(int argc, char **argv)
 
 void usage(const char *progname)
 {
-    fprintf(stderr, "usage: %s file\n", progname);
+    fprintf(stderr,
+        "Usage: %s [OPTIONS] file\n"
+        "\n"
+        "OPTIONS\n"
+        "\n"
+        "  --left2right    ask from left to right column\n"
+        "  --right2left    ask from right to left column\n"
+        "  --as-is         use order in input file\n"
+        "  --random        use random order\n"
+        "  --lsort         sort by left column\n"
+        "  --rsort         sort by right column\n",
+        progname);
 }
