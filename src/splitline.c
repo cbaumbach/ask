@@ -50,13 +50,9 @@ int splitline(char *line, char **left, char **right)
 
 static int space_only(const char *s)
 {
-    char *p = s;
+    while (*s != '\0')
+        if (*s++ != ' ')        /* found a non-space */
+            return 0;
 
-    while (*p != '\0')
-        if (*p != ' ')          /* found a non-space */
-            break;
-        else
-            ++p;
-
-    return *p == '\0';
+    return 1;
 }
