@@ -1,5 +1,6 @@
 #include "unity_fixture.h"
 #include "prompt.h"
+#include "from.h"
 #include "makeentry.h"
 
 TEST_GROUP(prompt);
@@ -38,7 +39,7 @@ TEST(prompt, compare_with_left)
     Entry e = makeentry("left", "right");
     int i;
 
-    i = correct(answer, e, LEFT);
+    i = correct(answer, e, RIGHT);
 
     TEST_ASSERT_EQUAL_INT(1, i);
 }
@@ -49,7 +50,7 @@ TEST(prompt, compare_with_right)
     Entry e = makeentry("left", "right");
     int i;
 
-    i = correct(answer, e, RIGHT);
+    i = correct(answer, e, LEFT);
 
     TEST_ASSERT_EQUAL_INT(1, i);
 }
@@ -60,7 +61,7 @@ TEST(prompt, fail_with_left)
     Entry e = makeentry("left", "right");
     int i;
 
-    i = correct(answer, e, LEFT);
+    i = correct(answer, e, RIGHT);
 
     TEST_ASSERT_EQUAL_INT(0, i);
 }
@@ -71,7 +72,7 @@ TEST(prompt, fail_with_right)
     Entry e = makeentry("left", "right");
     int i;
 
-    i = correct(answer, e, RIGHT);
+    i = correct(answer, e, LEFT);
 
     TEST_ASSERT_EQUAL_INT(0, i);
 }
