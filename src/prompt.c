@@ -5,3 +5,8 @@ const char *prompt(Entry e, int dir)
 {
     return (dir == LEFT) ? e.left : e.right;
 }
+
+int correct(const char *answer, Entry e, int dir)
+{
+    return strcmp(answer, (dir == LEFT) ? e.left : e.right) == 0;
+}
