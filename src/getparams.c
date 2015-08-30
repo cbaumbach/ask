@@ -25,7 +25,7 @@ int getparams(int argc, char **argv, Params *p)
     *p = initparams();
 
     i = 1;                      /* skip program name */
-    while (i < argc - 1) {      /* stop when filename is reached */
+    while (i < argc) {
 #define IS(opt) strcmp(opt, argv[i]) == 0
 #define HAS(opt) strstr(argv[i], opt) == argv[i]
         if (IS("--help"))
@@ -47,13 +47,23 @@ int getparams(int argc, char **argv, Params *p)
         else if (IS("--rsort"))
             p->order = RSORT;
         else {
-            set_err_msg("unknown option: %s", argv[i]);
-            return 0;
+            if (i == argc - 1) {
+                p->filename = argv[i];
+                return 1;
+            }
+            else {
+                set_err_msg("unknown option: %s", argv[i]);
+                return 0;
+            }
         }
 #undef IS
         ++i;
     }
-    p->filename = argv[i];
-
+    /* If we got here, then there was no filename on the command-line.
+       Unless the user specified the --help option, this is an error. */
+    if (!p->help) {
+        set_err_msg("missing input file");
+        return 0;
+    }
     return 1;
 }
