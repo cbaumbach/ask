@@ -112,10 +112,14 @@ int main(int argc, char **argv)
             ep->passed = 1;
             ++npassed;
         }
-        else if (++ep->ntry >= params.maxtry) {
-            ep->ntry = 0;       /* reset */
-            printf("! %s\n",
-                (params.from == LEFT) ? ep->right : ep->left);
+        else {
+            if (++ep->ntry >= params.maxtry) {
+                ep->ntry = 0;       /* reset */
+                printf("! %s\n",
+                    (params.from == LEFT) ? ep->right : ep->left);
+            }
+            else
+                printf("!\n");
         }
         i %= tab.n;
     }
