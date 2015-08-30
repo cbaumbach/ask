@@ -120,6 +120,8 @@ int main(int argc, char **argv)
         i %= tab.n;
     }
 
+    freetab(&tab);
+
     exit(EXIT_SUCCESS);
 }
 

@@ -13,5 +13,6 @@ typedef struct tab Tab;
 
 Tab maketab(void);
 int insert(Tab *tab, Entry e);
+void freetab(Tab *tab);
 
 #endif

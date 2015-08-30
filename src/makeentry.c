@@ -1,4 +1,5 @@
 #include "makeentry.h"
+#include <stdlib.h>
 
 Entry makeentry(const char *left, const char *right)
 {
@@ -10,4 +11,11 @@ Entry makeentry(const char *left, const char *right)
     e.right = right;
 
     return e;
+}
+
+void freeentry(Entry *e)
+{
+    free((void *)e->left);
+    e->left = NULL;
+    e->right = NULL;
 }

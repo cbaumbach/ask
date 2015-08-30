@@ -11,5 +11,6 @@ struct entry {
 typedef struct entry Entry;
 
 Entry makeentry(const char *left, const char *right);
+void freeentry(Entry *e);
 
 #endif

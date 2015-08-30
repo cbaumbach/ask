@@ -38,3 +38,14 @@ int insert(Tab *t, Entry e)
 
     return 1;
 }
+
+void freetab(Tab *t)
+{
+    int i;
+
+    for (i = 0; i < t->n; i++)
+        freeentry(&t->e[i]);
+    free(t->e);
+    t->e = NULL;
+    t->n = t->size = 0;
+}
